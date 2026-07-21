@@ -1,2 +1,0 @@
-# Smt-
-SMT dashboard creation 
