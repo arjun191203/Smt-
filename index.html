@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMT Line Dashboard</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<script>
+  // Fallback: if the primary CDN didn't load Chart.js, try a second CDN.
+  if (typeof Chart === "undefined") {
+    document.write('<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"><\/script>');
+  }
+</script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-left">
+    <span class="dot"></span>
+    <h1>SMT LINE DASHBOARD</h1>
+  </div>
+  <div class="topbar-right">
+    <input type="date" id="datePicker">
+    <span id="clock" class="clock"></span>
+  </div>
+</header>
+
+<nav class="tabbar" id="tabbar">
+  <button class="tab active" data-tab="overview">Overview</button>
+  <!-- line tabs injected here -->
+</nav>
+
+<main id="app">
+  <section id="view-overview" class="view active">
+
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-label">Plan Qty</div><div class="kpi-value" id="kpiPlan">-</div></div>
+      <div class="kpi"><div class="kpi-label">Actual Qty</div><div class="kpi-value" id="kpiActual">-</div></div>
+      <div class="kpi accent" id="kpiAchCard"><div class="kpi-label">Achievement</div><div class="kpi-value" id="kpiAch">-</div></div>
+      <div class="kpi"><div class="kpi-label">Lines Running</div><div class="kpi-value" id="kpiLines">-</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Day Plan vs Actual — by Line</div>
+      <div class="table-wrap">
+        <table id="planTable">
+          <thead><tr><th>Line</th><th>Model</th><th>Shift</th><th>Plan</th><th>Actual</th><th>Achv %</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Hourly Output — All Lines</div>
+      <div class="chart-box"><canvas id="hourlyAllChart"></canvas></div>
+    </div>
+
+  </section>
+
+  <div id="lineViews"></div>
+</main>
+
+<footer class="statusbar">
+  <span id="lastUpdated">Loading...</span>
+  <span class="autorefresh">Auto-refresh every 60s</span>
+</footer>
+
+<script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+</body>
+</html>
